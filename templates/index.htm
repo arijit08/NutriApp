@@ -1,0 +1,87 @@
+<html>
+
+<head>
+    <title>
+        Welcome to NutriApp
+    </title>
+</head>
+
+<body>
+    Welcome to NutriApp.<br />
+    Please select an image of a food item <br />
+    <img id="img" src="selectimg.png" alt="Select an image" width="224" height="224" ondrop="drop(event)" /><br />
+    <input type="file" id="filebtn" /><br />
+    <h1>Prediction: </h1>
+    <h1 id="label"> (nothing yet) </h1>
+    <script>
+        var imgview = document.getElementById("img");
+        var filebtn = document.getElementById("filebtn");
+        var h1 = document.getElementById("label")
+        var host = "7r68vs6tk6.execute-api.ap-south-1.amazonaws.com"
+        var url = window.location.href
+        var labeltext = ""
+        filebtn.addEventListener("change", function () {
+            changeimage(this);
+        });
+
+        function changeimage(input) {
+            var reader;
+            if (input.files && input.files[0]) {
+                reader = new FileReader();
+                var imgdata
+                reader.onload = function (e) {
+                    imgdata = e.target.result
+                    imgview.setAttribute('src', imgdata);
+                    var formdata = new FormData()
+                    formdata.append('image', input.files[0])
+                    post_img(formdata)
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function post_img(formdata) {
+            var requestOptions = {
+                method: 'POST',
+                body: formdata,
+                redirect: 'follow'
+            };
+            fetch(url + "classify", requestOptions)
+                .then((response) => response.text())
+                .then((data) => console.log(labeltext = data))
+                .then(() => h1.innerHTML = labeltext);
+        }
+
+        function drop(e) {
+            e.stopPropagation();
+            e.preventDefault();
+            var dt = e.dataTransfer;
+            var file = dt.files[0];
+            var imageType = /^image\//;
+            if (!imageType.test(file.type)) {
+                alert("NOT AN IMAGE");
+                return;
+                var file = files[0];
+    var imageType = /^image\//;
+    if (!imageType.test(file.type)) {
+        alert("NOT AN IMAGE");
+        return;
+    }
+    var image = document.createElement("img");
+    image.classList.add("obj");
+    image.file = file;
+    image.height = $('#img').height();
+    image.width = $('#img').width();
+    preview.appendChild(image);
+    var reader = new FileReader();
+    reader.onload = (function(aImg) {
+        return function(e) {
+            aImg.src = e.target.result;
+        };
+    })(img);
+    reader.readAsDataURL(file)
+            
+        }
+    </script>
+</body>
+</html>

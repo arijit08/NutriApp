@@ -9,8 +9,7 @@
 <body>
     Welcome to NutriApp.<br />
     Please select an image of a food item <br />
-    <img id="img" src="selectimg.png" alt="Select an image" width="224" height="224" ondrag=""
-        ondrop="drop(event)" /><br />
+    <img id="img" src="selectimg.png" alt="Select an image" width="224" height="224" /><br />
     <input type="file" id="filebtn" /><br />
     <h1>Prediction: </h1>
     <h1 id="label"> (nothing yet) </h1>
@@ -52,38 +51,7 @@
                 .then((data) => console.log(labeltext = data))
                 .then(() => h1.innerHTML = labeltext);
         }
-
-        function drop(e) {
-            e.stopPropagation();
-            e.preventDefault();
-            var dt = e.dataTransfer;
-            var file = dt.files[0];
-            var imageType = /^image\//;
-            if (!imageType.test(file.type)) {
-                alert("NOT AN IMAGE");
-                return;
-                var file = files[0];
-                var imageType = /^image\//;
-                if (!imageType.test(file.type)) {
-                    alert("NOT AN IMAGE");
-                    return;
-                }
-                var image = document.createElement("img");
-                image.classList.add("obj");
-                image.file = file;
-                image.height = $('#img').height();
-                image.width = $('#img').width();
-                preview.appendChild(image);
-                var reader = new FileReader();
-                reader.onload = (function (aImg) {
-                    return function (e) {
-                        aImg.src = e.target.result;
-                    };
-                })(img);
-                reader.readAsDataURL(file)
-            }
-
-        }
+        
     </script>
 </body>
 

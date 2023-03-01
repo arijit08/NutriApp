@@ -4,12 +4,13 @@ from flask import Flask, request, render_template
 import numpy as np
 from PIL import Image
 
-#Create Flask application - to create a server instance and pass requests to this app
+#Create Flask application - to create a server instance and pass requests to this app via an API
 app = Flask(__name__)
 
-#Recognised food items
+#Recognised food items (purely for proof of concept)
 class_names = ["chicken_curry","chicken_wings","fried_rice","grilled_salmon","hamburger","ice_cream","pizza","ramen","steak","sushi"]
-#Pre trained model
+
+#Pre trained model (trained using Google Colab, using transferred learning)
 model = tf.keras.models.load_model("NutriApp/nutriapp.h5", custom_objects={'KerasLayer':hub.KerasLayer})
 
 #Function that passes image to the model and returns its output
